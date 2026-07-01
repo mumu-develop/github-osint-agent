@@ -1,0 +1,104 @@
+# Environment variables (IMPORTANT: Never commit .env files)
+.env
+.env.local
+.env.*.local
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Frontend (Node.js)
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+.npm
+.eslintcache
+
+# Claude Code / AI tools
+.claude/
+.sandbox_id_cache.json
+
+# Database
+*.db
+*.sqlite3
+mysql_data/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp
+*.temp
+
+# Docker
+docker/mysql_data/
+docker/redis_data/
+
+# Reports (generated files - keep directory structure but ignore content)
+reports/**/*.md
+reports/*.json
+reports/*.html
+reports/**/
+
+# Security sensitive files
+secrets/
+credentials/
+*.pem
+*.key
+*.pub
+id_rsa*

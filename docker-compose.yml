@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  opensandbox-server:
+    image: opensandbox/server:latest
+    environment:
+      - RUNTIME_TYPE=docker
+      - SANDBOX_RUNTIME=runsc
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8080:8080"

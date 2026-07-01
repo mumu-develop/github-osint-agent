@@ -1,0 +1,27 @@
+fastapi>=0.138.0
+uvicorn[standard]>=0.49.0
+python-dotenv>=1.0.0
+pyyaml>=6.0.1
+PyGithub>=2.1.1
+deepagents>=0.6.11
+aiohttp>=3.9.1
+langgraph-checkpoint-mysql[aiomysql]>=3.0.0
+asyncmy>=0.2.9  # MySQL Store 依赖
+langchain>=1.3.10
+langchain-core>=1.4.8
+langchain-openai>=1.3.2
+langgraph>=1.2.6
+structlog>=24.1.0
+tenacity>=8.2.3
+requests>=2.31.0
+opensandbox>=0.1.0
+opensandbox-server>=0.1.0
+pydantic>=2.12.5  # 数据验证（灵活版本避免冲突）
+apscheduler>=3.10.0  # 扫描调度器依赖
+croniter>=2.0.0  # Cron 表达式解析依赖
+openai>=1.0.0  # LLM 分析依赖
+
+redis>=5.0.0  # 异步 Redis 客户端（分布式锁）
+
+# 安全扫描增强工具
+detect-secrets>=1.5.0  # 密钥检测（替代正则匹配，准确性更高）

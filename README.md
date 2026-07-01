@@ -138,13 +138,7 @@ npm install
 cd ..
 ```
 
-### 6. Initialize database
-
-```bash
-python scripts/init_tables.py
-```
-
-### 7. Run the application
+### 6. Run the application
 
 ```bash
 # Start backend server
@@ -155,7 +149,9 @@ cd frontend
 npm run dev
 ```
 
-### 8. Access the application
+**Note**: Database tables are automatically created when the backend starts. No manual initialization required.
+
+### 7. Access the application
 
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:8000

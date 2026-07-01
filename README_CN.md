@@ -138,13 +138,7 @@ npm install
 cd ..
 ```
 
-### 6. 初始化数据库
-
-```bash
-python scripts/init_tables.py
-```
-
-### 7. 启动应用
+### 6. 启动应用
 
 ```bash
 # 启动后端服务
@@ -155,7 +149,9 @@ cd frontend
 npm run dev
 ```
 
-### 8. 访问应用
+**注意**：数据库表会在后端启动时自动创建，无需手动初始化。
+
+### 7. 访问应用
 
 - 前端界面: http://localhost:5173
 - 后端 API: http://localhost:8000

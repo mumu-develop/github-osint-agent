@@ -16,7 +16,6 @@ help:
 	@echo "  build          Build Python package"
 	@echo "  docker-up      Start Docker containers"
 	@echo "  docker-down    Stop Docker containers"
-	@echo "  init-db        Initialize database tables"
 	@echo ""
 
 install:
@@ -59,9 +58,6 @@ docker-up:
 docker-down:
 	docker-compose down
 
-init-db:
-	python scripts/init_tables.py
-
 # Quick start for development
-quickstart: docker-up install install-frontend init-db run
+quickstart: docker-up install install-frontend run
 	@echo "Server started at http://localhost:8000"

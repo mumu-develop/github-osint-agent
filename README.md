@@ -64,6 +64,7 @@ An intelligent multi-agent OSINT (Open Source Intelligence) system for automated
 
 - Python 3.12+
 - Node.js 18+
+- Docker (required for OpenSandbox)
 - MySQL 8.0+
 - Redis (optional, for distributed deployments)
 - GitHub Personal Access Token
@@ -87,16 +88,45 @@ cp .env.example .env
 # - LLM_*: LLM API settings (OpenAI/Anthropic)
 ```
 
-### 3. Start dependencies
+### 3. Start OpenSandbox Server
+
+OpenSandbox is a secure code execution sandbox required for the agent to run analysis tasks.
 
 ```bash
-# Using Docker Compose (recommended)
+# Start OpenSandbox server via Docker Compose
 docker-compose up -d
 
-# Or manually start MySQL and Redis
+# Verify the service is running
+docker ps | grep opensandbox
+curl http://localhost:8080/health
 ```
 
-### 4. Install dependencies
+The OpenSandbox server will be available at `http://localhost:8080`.
+
+**Note**: Ensure Docker is running before starting the sandbox. On macOS with Colima:
+```bash
+colima start
+docker-compose up -d
+```
+
+### 4. Start Database Services (MySQL)
+
+If you don't have a local MySQL instance:
+
+```bash
+# Option 1: Use Docker
+docker run -d \
+  --name osint-mysql \
+  -p 3306:3306 \
+  -e MYSQL_ROOT_PASSWORD=root123 \
+  -e MYSQL_DATABASE=osint \
+  mysql:8.0
+
+# Option 2: Use existing MySQL server
+# Just configure the connection in .env file
+```
+
+### 5. Install dependencies
 
 ```bash
 # Python dependencies
@@ -108,7 +138,13 @@ npm install
 cd ..
 ```
 
-### 5. Run the application
+### 6. Initialize database
+
+```bash
+python scripts/init_tables.py
+```
+
+### 7. Run the application
 
 ```bash
 # Start backend server
@@ -119,7 +155,7 @@ cd frontend
 npm run dev
 ```
 
-### 6. Access the application
+### 8. Access the application
 
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:8000
@@ -158,6 +194,44 @@ npm run dev
 | **Email** | Global | `SMTP_HOST`, `SMTP_PORT`, `EMAIL_TO` |
 
 Configure one or multiple channels in `.env`. CRITICAL and HIGH severity alerts are sent immediately to all configured channels.
+
+## Sandbox Image Build
+
+The project uses a custom OpenSandbox image with pre-installed Python packages for faster startup.
+
+### Build the sandbox image
+
+```bash
+cd docker
+chmod +x build.sh
+./build.sh
+```
+
+This builds the image: `sandbox-registry.cn-zhangjiakou.cr.aliyuncs.com/osint/osint-sandbox:v1.0.0`
+
+### Push to registry (optional)
+
+```bash
+# Login to registry
+docker login sandbox-registry.cn-zhangjiakou.cr.aliyuncs.com
+
+# Push the image
+docker push sandbox-registry.cn-zhangjiakou.cr.aliyuncs.com/osint/osint-sandbox:v1.0.0
+```
+
+### Pre-installed packages
+
+The sandbox image includes:
+- numpy, pandas, matplotlib (data analysis)
+- requests, beautifulsoup4 (web scraping)
+- scipy, scikit-learn, seaborn (ML/statistics)
+- jupyter, ipython (interactive computing)
+
+If you want to use your own registry, modify `docker/build.sh`:
+```bash
+IMAGE_NAME="your-sandbox"
+REGISTRY="your-registry.example.com"
+```
 
 ## Project Structure
 

@@ -64,6 +64,7 @@
 
 - Python 3.12+
 - Node.js 18+
+- Docker（必需，用于 OpenSandbox）
 - MySQL 8.0+
 - Redis（可选，用于分布式部署）
 - GitHub Personal Access Token
@@ -87,16 +88,45 @@ cp .env.example .env
 # - LLM_*: 大模型 API 配置（OpenAI/Anthropic）
 ```
 
-### 3. 启动依赖服务
+### 3. 启动 OpenSandbox 沙箱服务
+
+OpenSandbox 是安全代码执行沙箱，Agent 执行分析任务时必需。
 
 ```bash
-# 使用 Docker Compose（推荐）
+# 通过 Docker Compose 启动 OpenSandbox 服务
 docker-compose up -d
 
-# 或手动启动 MySQL 和 Redis
+# 验证服务是否正常运行
+docker ps | grep opensandbox
+curl http://localhost:8080/health
 ```
 
-### 4. 安装依赖
+OpenSandbox 服务地址：`http://localhost:8080`
+
+**注意**：启动沙箱前需确保 Docker 已运行。macOS + Colima 环境：
+```bash
+colima start
+docker-compose up -d
+```
+
+### 4. 启动数据库服务（MySQL）
+
+如果没有本地 MySQL 实例：
+
+```bash
+# 方式1: 使用 Docker 启动
+docker run -d \
+  --name osint-mysql \
+  -p 3306:3306 \
+  -e MYSQL_ROOT_PASSWORD=root123 \
+  -e MYSQL_DATABASE=osint \
+  mysql:8.0
+
+# 方式2: 使用已有 MySQL 服务器
+# 在 .env 文件中配置连接信息即可
+```
+
+### 5. 安装依赖
 
 ```bash
 # Python 依赖
@@ -108,7 +138,13 @@ npm install
 cd ..
 ```
 
-### 5. 启动应用
+### 6. 初始化数据库
+
+```bash
+python scripts/init_tables.py
+```
+
+### 7. 启动应用
 
 ```bash
 # 启动后端服务
@@ -119,7 +155,7 @@ cd frontend
 npm run dev
 ```
 
-### 6. 访问应用
+### 8. 访问应用
 
 - 前端界面: http://localhost:5173
 - 后端 API: http://localhost:8000
@@ -158,6 +194,44 @@ npm run dev
 | **Email** | 国际 | `SMTP_HOST`, `SMTP_PORT`, `EMAIL_TO` |
 
 在 `.env` 中配置一个或多个渠道。CRITICAL 和 HIGH 级别的告警会立即发送到所有已配置的渠道。
+
+## 沙箱镜像构建
+
+项目使用定制的 OpenSandbox 镜像，预装 Python 依赖以加速沙箱启动。
+
+### 构建沙箱镜像
+
+```bash
+cd docker
+chmod +x build.sh
+./build.sh
+```
+
+构建的镜像：`sandbox-registry.cn-zhangjiakou.cr.aliyuncs.com/osint/osint-sandbox:v1.0.0`
+
+### 推送到镜像仓库（可选）
+
+```bash
+# 登录镜像仓库
+docker login sandbox-registry.cn-zhangjiakou.cr.aliyuncs.com
+
+# 推送镜像
+docker push sandbox-registry.cn-zhangjiakou.cr.aliyuncs.com/osint/osint-sandbox:v1.0.0
+```
+
+### 预装依赖包
+
+沙箱镜像包含以下 Python 包：
+- numpy, pandas, matplotlib（数据分析）
+- requests, beautifulsoup4（网络抓取）
+- scipy, scikit-learn, seaborn（机器学习/统计）
+- jupyter, ipython（交互式计算）
+
+如需使用自己的镜像仓库，修改 `docker/build.sh`：
+```bash
+IMAGE_NAME="your-sandbox"
+REGISTRY="your-registry.example.com"
+```
 
 ## 项目结构
 

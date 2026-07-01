@@ -1,0 +1,30 @@
+# OSINT Agent 定制沙箱镜像
+# 预装 Python 依赖，加速沙箱启动
+
+FROM sandbox-registry.cn-zhangjiakou.cr.aliyuncs.com/opensandbox/code-interpreter:v1.0.2
+
+# 沙箱目录配置
+ARG SANDBOX_DIRS="/analysis /reports /memories /persisted-skills /workspace"
+
+# 检查 Python 环境
+RUN python3 --version && \
+    (which pip3 || which pip || echo "pip not found")
+
+# 使用 get-pip.py 安装 pip
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py && \
+    python3 /tmp/get-pip.py --break-system-packages && \
+    rm /tmp/get-pip.py
+
+# 安装依赖（阿里云 PyPI 镜像）
+RUN pip3 install -i https://mirrors.aliyun.com/pypi/simple/ --break-system-packages \
+    numpy pandas matplotlib requests beautifulsoup4 \
+    scipy scikit-learn seaborn jupyter ipython
+
+# 创建工作目录
+RUN mkdir -p ${SANDBOX_DIRS}
+
+# 验证
+RUN python3 -c "import numpy, pandas, matplotlib, requests, bs4; print('Packages OK')"
+
+LABEL maintainer="osint-agent"
+LABEL version="1.0.0"

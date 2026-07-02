@@ -74,11 +74,11 @@ mysql = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/miaomiaoLmm/github-osint-agent"
-Documentation = "https://github.com/miaomiaoLmm/github-osint-agent#readme"
-Repository = "https://github.com/miaomiaoLmm/github-osint-agent.git"
-Issues = "https://github.com/miaomiaoLmm/github-osint-agent/issues"
-Changelog = "https://github.com/miaomiaoLmm/github-osint-agent/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/mumu-develop/github-osint-agent"
+Documentation = "https://github.com/mumu-develop/github-osint-agent#readme"
+Repository = "https://github.com/mumu-develop/github-osint-agent.git"
+Issues = "https://github.com/mumu-develop/github-osint-agent/issues"
+Changelog = "https://github.com/mumu-develop/github-osint-agent/blob/main/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 where = ["."]

@@ -257,4 +257,4 @@ Open an issue using the [Feature Request template](.github/ISSUE_TEMPLATE/featur
 If your question isn't answered here:
 - Open an issue with the `question` label
 - Check the [Documentation](README.md)
-- Review existing [Issues](https://github.com/miaomiaoLmm/github-osint-agent/issues)
+- Review existing [Issues](https://github.com/mumu-develop/github-osint-agent/issues)

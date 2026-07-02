@@ -72,7 +72,7 @@ An intelligent multi-agent OSINT (Open Source Intelligence) system for automated
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/miaomiaoLmm/github-osint-agent.git
+git clone https://github.com/mumu-develop/github-osint-agent.git
 cd github-osint-agent
 ```
 

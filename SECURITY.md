@@ -18,7 +18,7 @@ We take security vulnerabilities seriously. If you discover a security issue, pl
 Instead, please report them via:
 
 1. **Email**: Send details to the maintainer (preferably encrypted)
-2. **GitHub Security Advisory**: Use the [Security Advisories](https://github.com/miaomiaoLmm/github-osint-agent/security/advisories) feature
+2. **GitHub Security Advisory**: Use the [Security Advisories](https://github.com/mumu-develop/github-osint-agent/security/advisories) feature
 
 ### What to Include
 

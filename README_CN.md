@@ -72,7 +72,7 @@
 ### 1. 克隆项目
 
 ```bash
-git clone https://github.com/miaomiaoLmm/github-osint-agent.git
+git clone https://github.com/mumu-develop/github-osint-agent.git
 cd github-osint-agent
 ```
 
